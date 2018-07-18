@@ -2,56 +2,65 @@
 body { background-color: #fff; } form{ width:80%; margin:0px auto; } textarea{ resize:none; width:500px; height:80px; } h1 { color: maroon; margin-left: 40px; } label{ float:left; min-width:100px; } 
 </style>
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/5.0.3/math.min.js" integrity="sha256-sy2HI1EbY2kiSZpYnA7HAMXPzAZz8lRc7J/xh+4Nv0Q=" crossorigin="anonymous"></script>
 <script> 
 function myFunction(e) { 
 var txtno = document.getElementById("no"); 
 var txtValue = document.getElementById("name"); 
+  
+
 
 if(IsBalanced(txtno.value)===false){
-document.getElementById("no").style.color = 'red';	
+  document.getElementById("no").style.color = 'red'; 
+   
 }else{
-document.getElementById("no").style.color = 'green';	
+  document.getElementById("no").style.color = 'green';  
 
 }
 
 //txtValue = txtValue.replace(/\r?\n/g,' ');
 
    if(txtno.value == null || txtno.value == undefined || txtno.value == "") 
-   		txtValue.value = ""; 
+      txtValue.value = ""; 
 
 var arr=txtno.value.split('\n');
 console.log(txtno.value);
 console.log(arr);
 txtValue.value="";
-	for(var i=0;i<arr.length;i++){
-		sendLine(arr[i]);
-		txtValue.value+="\n";
-		
-	}
+  for(var i=0;i<arr.length;i++){
+    try{
+        var x=math.eval(arr[i]);
+          sendLine(arr[i]);
+          txtValue.value+="\n";
+      }catch(error){
+        document.getElementById("no").style.color = 'red'; 
+        break;
+      }
+    
+  }
 
 }
 
 function sendLine(data){
-	var txtValue = document.getElementById("name");
-	for (var i = 0; i <= data.length; i++) {
-    	charvalue = getValue(data, i);
-    	i = getI(data, i);
-	    if (charvalue != undefined || charvalue != "" || charvalue != null) {
-	        txtValue.value += " " + getProperty(charvalue.toString());
-	    }
-	}
+  var txtValue = document.getElementById("name");
+  for (var i = 0; i <= data.length; i++) {
+      charvalue = getValue(data, i);
+      i = getI(data, i);
+      if (charvalue != undefined || charvalue != "" || charvalue != null) {
+          txtValue.value += " " + getProperty(charvalue.toString());
+      }
+  }
 }
 function getValue(data,i){ 
-   	   	var seperator="+-() "; 
-   	   	var key=""; 
-   	   	while((seperator.indexOf(data.charAt(i))===-1) && data.length>i){ 
-   	   		key+=data.charAt(i); key=key.trim(); i++; 
-   	   	} 
-   	   	if(key==="" || key.length==0){
-   	   		 key=data.charAt(i); 
-   	   	}
-   	   	return key; 
+        var seperator="+-() "; 
+        var key=""; 
+        while((seperator.indexOf(data.charAt(i))===-1) && data.length>i){ 
+          key+=data.charAt(i); key=key.trim(); i++; 
+        } 
+        if(key==="" || key.length==0){
+           key=data.charAt(i); 
+        }
+        return key; 
 }
 function getI(data, i) {
     var seperator = "+-() ";
@@ -114,4 +123,4 @@ transforms the character to upper case.</p>
 <br/>
 <label>Value:</label> 
 <textarea id="name"></textarea>
-COPY TO CLIPBOARD	
+COPY TO CLIPBOARD 

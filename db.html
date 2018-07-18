@@ -1,0 +1,117 @@
+<style> 
+body { background-color: #fff; } form{ width:80%; margin:0px auto; } textarea{ resize:none; width:500px; height:80px; } h1 { color: maroon; margin-left: 40px; } label{ float:left; min-width:100px; } 
+</style>
+
+
+<script> 
+function myFunction(e) { 
+var txtno = document.getElementById("no"); 
+var txtValue = document.getElementById("name"); 
+
+if(IsBalanced(txtno.value)===false){
+document.getElementById("no").style.color = 'red';	
+}else{
+document.getElementById("no").style.color = 'green';	
+
+}
+
+//txtValue = txtValue.replace(/\r?\n/g,' ');
+
+   if(txtno.value == null || txtno.value == undefined || txtno.value == "") 
+   		txtValue.value = ""; 
+
+var arr=txtno.value.split('\n');
+console.log(txtno.value);
+console.log(arr);
+txtValue.value="";
+	for(var i=0;i<arr.length;i++){
+		sendLine(arr[i]);
+		txtValue.value+="\n";
+		
+	}
+
+}
+
+function sendLine(data){
+	var txtValue = document.getElementById("name");
+	for (var i = 0; i <= data.length; i++) {
+    	charvalue = getValue(data, i);
+    	i = getI(data, i);
+	    if (charvalue != undefined || charvalue != "" || charvalue != null) {
+	        txtValue.value += " " + getProperty(charvalue.toString());
+	    }
+	}
+}
+function getValue(data,i){ 
+   	   	var seperator="+-() "; 
+   	   	var key=""; 
+   	   	while((seperator.indexOf(data.charAt(i))===-1) && data.length>i){ 
+   	   		key+=data.charAt(i); key=key.trim(); i++; 
+   	   	} 
+   	   	if(key==="" || key.length==0){
+   	   		 key=data.charAt(i); 
+   	   	}
+   	   	return key; 
+}
+function getI(data, i) {
+    var seperator = "+-() ";
+    var key = "";
+    while ((seperator.indexOf(data.charAt(i)) === -1) && data.length > i) {
+        key += data.charAt(i);
+        key = key.trim();
+        i++;
+    }
+    if (key === "" || key.length == 0) {
+        return i;
+    } else {
+        return i - 1;
+    }
+}
+var getProperty = function(propertyName) {
+    var data = obj[propertyName];
+    if (data != undefined) return data;
+    else return "";
+};
+var obj = {
+    "(": "(",
+    ")": ")",
+    "+": "Plus",
+    "-": "Minus",
+    "1": "Debendra",
+    "2": "Nanda",
+    "3": "Ajay",
+    "4": "Deb",
+    "5": "Nanda",
+    "6": "Harish",
+    "7": "Mukesh",
+    "8": "Dinesh",
+    "9": "Asit",
+    "10": "DevD",
+    "11": "Eleven",
+    "12": "Twelve"
+};
+
+function IsBalanced(str) {
+
+  var cur = removeCruft(str), next;
+
+  while (next = removeMatchedPairs(cur)) {
+      if (next === cur) return false;
+      cur = next;
+  }
+  return true; //if we've arrived here, `next` is empty
+
+  function removeMatchedPairs(s) { return s.replace(/\(\)|\[\]|{}/g,'') }
+  function removeCruft(s) { return s.replace(/[^(){}[\]]/g,'') }
+}
+</script>
+A function is triggered when the user releases a key in the input field. The function
+transforms the character to upper case.</p>
+<label>Enter No:</label>
+<textarea id="no" onkeyup="myFunction(this)"></textarea>
+<span id="nameloc"></span>
+<br/>
+<br/>
+<label>Value:</label> 
+<textarea id="name"></textarea>
+COPY TO CLIPBOARD	

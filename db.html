@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<style>
+body {
+    background-color: #fff;
+}
+form{
+	width:80%;
+	margin:30px auto;
+}
+textarea{
+	resize:none;
+	width:500px;
+	height:80px;
+	white-space: pre-wrap;
+	float:left;
+} 
+label{
+	float:left;
+	min-width:100px;
+}
+#nameloc{
+	float:left;
+	color:#ea0303;
+	margin-left:10px;
+}
+.clear{
+	clear:both;
+	
+}
+
+</style>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/5.0.3/math.min.js" integrity="sha256-sy2HI1EbY2kiSZpYnA7HAMXPzAZz8lRc7J/xh+4Nv0Q=" crossorigin="anonymous"></script>
+<script> 
+
+
+
+function myFunction(e) { 
+var txtno = document.getElementById("no"); 
+var txtValue = document.getElementById("name"); 
+  
+if(IsBalanced(txtno.value)===false){
+  document.getElementById("nameloc").innerHTML=  
+" <img src='images/unchecked.gif'/> Please enter"; 
+return;
+}else{
+  document.getElementById("nameloc").innerHTML=" <img src='images/checked.gif'/>";  
+}
+
+
+txtno.value=txtno.value.replace(/([^0-9 i+\-\(\)\\\n])/g,"");
+
+txtno.value=txtno.value.replace(/([+\-]{2,})/g,"");
+
+
+console.log(txtno.value);
+ if(txtno.value == null || txtno.value == undefined || txtno.value == "") 
+      txtValue.value = ""; 
+var arr=txtno.value.split('\n');
+console.log(txtno.value);
+console.log(arr);
+txtValue.value="";
+  for(var i=0;i<arr.length;i++){
+    try{
+        var x=math.eval(arr[i]);
+
+          sendLine(arr[i]);
+          txtValue.value+="\n";
+      }catch(error){
+        document.getElementById("nameloc").innerHTML=  
+			" <img src='images/unchecked.gif'/> Please enter"; 
+        break;
+      }
+    
+  }
+}
+function sendLine(data){
+  var txtValue = document.getElementById("name");
+  for (var i = 0; i <= data.length; i++) {
+      charvalue = getValue(data, i);
+      i = getI(data, i);
+      if (charvalue != undefined || charvalue != "" || charvalue != null) {
+          txtValue.value += " " + getProperty(charvalue.toString());
+      }
+  }
+}
+function getValue(data,i){ 
+        var seperator="+-() "; 
+        var key=""; 
+        while((seperator.indexOf(data.charAt(i))===-1) && data.length>i){ 
+          key+=data.charAt(i); key=key.trim(); i++; 
+        } 
+        if(key==="" || key.length==0){
+           key=data.charAt(i); 
+        }
+        return key; 
+}
+function getI(data, i) {
+    var seperator = "+-() ";
+    var key = "";
+    while ((seperator.indexOf(data.charAt(i)) === -1) && data.length > i) {
+        key += data.charAt(i);
+        key = key.trim();
+        i++;
+    }
+    if (key === "" || key.length == 0) {
+        return i;
+    } else {
+        return i - 1;
+    }
+}
+var getProperty = function(propertyName) {
+    var data = obj[propertyName];
+    if (data != undefined) return data;
+    else return "";
+};
+var obj = {
+    "(": "(",
+    ")": ")",
+    "+": "Plus",
+    "-": "Minus",
+    "1": "Debendra",
+    "2": "Nanda",
+    "3": "Ajay",
+    "4": "Deb",
+    "5": "Nanda",
+    "6": "Harish",
+    "7": "Mukesh",
+    "8": "Dinesh",
+    "9": "Asit",
+    "10": "DevD",
+    "11": "Eleven",
+    "12": "Twelve"
+};
+function IsBalanced(str) {
+  var cur = removeCruft(str), next;
+  while (next = removeMatchedPairs(cur)) {
+      if (next === cur) return false;
+      cur = next;
+  }
+  return true; //if we've arrived here, `next` is empty
+  function removeMatchedPairs(s) { return s.replace(/\(\)|\[\]|{}/g,'') }
+  function removeCruft(s) { return s.replace(/[^(){}[\]]/g,'') }
+}
+</script>
+
+<form>
+	<label>Enter No:</label>
+	<textarea id="no" onkeyup="return myFunction(this)" ></textarea>
+	<span id="nameloc"></span>
+	<div class="clear"></div>
+	<br/>
+	<br/>
+	<label>Value:</label> 
+	<textarea id="name"></textarea>
+	<div class="clear"></div>
+	<br/>
+	<br/>
+	<p>1. other alphabet should be hide only 0-9, (), +-, space, enter, backspace, delete and I<br>
+	2.  +/- should be available after no. and only once. like (1+2+3+5) not like(1++2---)<br>
+	</p>
+</form>
+
+</body>
+</html>

@@ -51,7 +51,7 @@ return;
 
 txtno.value=txtno.value.replace(/([^0-9 i+\-\(\)\\\n])/g,"");
 
-txtno.value=txtno.value.replace(/([+\-]{2,})/g,"");
+txtno.value=txtno.value.replace(/([+\-]{1,}\s*[+\-]{1,})/g,"");
 
 
 console.log(txtno.value);

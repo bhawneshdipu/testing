@@ -7,8 +7,9 @@ body { background-color: #fff; } form{ width:80%; margin:0px auto; } textarea{ r
 function myFunction(e) { 
 var txtno = document.getElementById("no"); 
 var txtValue = document.getElementById("name"); 
-  
 
+txtno.value=txtno.value.replace(/([^0-9 i+\-\(\)])/g,"");
+console.log(txtno.value);
 
 if(IsBalanced(txtno.value)===false){
   document.getElementById("no").style.color = 'red'; 
